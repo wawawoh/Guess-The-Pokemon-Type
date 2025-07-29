@@ -7,4 +7,10 @@
     .incorrect-button {
         @apply brightness-[0.2]
     }
+    .correct-display {
+        @apply text-green-600
+    }
+    .incorrect-display {
+        @apply text-red-600
+    }
 }

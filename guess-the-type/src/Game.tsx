@@ -1,20 +1,8 @@
-import React, { createContext, useEffect, useState } from "react"
+import React, {  useEffect, useState } from "react"
+import { chosenTypeContext } from "./chosenTypeContext"
 
 import TypeSection from "./TypeSection"
-interface chosenTypeContextValue {
-    chosenType: string[];
-    setChosenType:React.Dispatch<React.SetStateAction<string[]>>,
-    score:boolean[],
-    setScore:React.Dispatch<React.SetStateAction<boolean[]>>
 
-}
-export const chosenTypeContext = createContext<chosenTypeContextValue> ({
-    chosenType: ["",""],
-    setChosenType: ()=> {},
-    score: [],
-    setScore:()=>{}
-
-})
 
 function Game() {
     const [image,setImage] = useState("")
@@ -23,6 +11,7 @@ function Game() {
     const [chosenType, setChosenType] = useState <string[]>([])
     const [displayType, setDisplaytype] = useState<string[]>([""])
     const [score, setScore] = useState<boolean[]>([])
+    
     
      
     interface insideType {
@@ -56,16 +45,39 @@ useEffect(()=> {
     // setChosenType((prev)=> changingDisplay(prev))
 }, [score])
  
-    // const changingDisplay = (displayArray:string[]):string[] => {
-    //     const temp = [...displayArray]
-    //     temp.map((el)=> {
-    //         if (pokemonType.includes(el)) {
-    //             return el
-    //         } else {
-    //             return pokemonType.find((pokeType)=> pokeType !== el)
-    //         }
-    //     })
-    // }
+    const changingDisplay = () => {
+        console.log(pokemonType.length ===1, "if length is qeual to 1")
+       if (pokemonType.length === 1) {
+        if (!pokemonType.includes(displayType[0]) ) {
+            setDisplaytype([pokemonType[0]])
+            return
+           
+        }
+       } else {
+        console.log("longet than 2 types")
+            setDisplaytype((prev)=> indexChanger(prev))
+            console.log("this is the display type", displayType)
+       }
+    }
+    const indexChanger =(displayType:string[]) => {
+        const newArray = [...displayType]
+        newArray.forEach((el,index) => {
+            if (!pokemonType.includes(el)) {
+              if (index === 0) {
+                newArray[0] =( pokemonType.find((el) => el !== displayType[1] )! )
+              } else {
+                newArray[1] =( pokemonType.find((el) => el !== displayType[0])! )
+
+              }
+
+            }
+            
+        }
+        
+    );
+    console.log("here is the new array,", newArray)
+    return newArray
+    }
     
 
     async function getPokemon(id: number) {
@@ -79,11 +91,14 @@ useEffect(()=> {
             const pokemon = await response.json()
             
             
-            pokemon.types.forEach((current:pokemonType) => {
-                // console.log("this is the current type being uploaded", current.type.name)
-                setPokemonType((prev)=> [...prev, current.type.name])
+            const types = pokemon.types.map((current: pokemonType) => current.type.name);
+setPokemonType(types);
+
+// pokemon.types.forEach((current:pokemonType) => {
+//                 // console.log("this is the current type being uploaded", current.type.name)
+//                 setPokemonType((prev)=> [...prev, current.type.name])
                 
-            });
+//             }); THE OLD VERSION FIND OUT WHY IT DID NOT WORK?????????
             console.log(pokemon.types)
             setImage(pokemon.sprites.front_default)
             setName(pokemon.name)
@@ -100,12 +115,9 @@ useEffect(()=> {
         getPokemon(Math.floor((Math.random()* 1024) +1))
 
     },[])
-    useEffect(()=> {
-        // console.log("the new chosen type", chosenType)
-        setDisplaytype(chosenType)
-        console.log(score)
 
-    },[chosenType,score])
+    // this one is causing problems
+    
     const handleRemovingType = (item:string,) => {
         setChosenType((prev) => prev.map((currentItem, )=> currentItem == item ? "" : currentItem))
     }
@@ -119,9 +131,17 @@ useEffect(()=> {
             } else return false
         })
         setScore(temp)
+        changingDisplay()
 
     }
-    
+    const determineScoreTruth = (index:number) => {
+        if (score[index] ) 
+            {return "correct-display"
+
+            } else {
+                return "incorrect-display"
+            }
+    } 
    
     
     return (
@@ -137,7 +157,9 @@ useEffect(()=> {
            {displayType &&  (displayType.map ((item:string,index:number)=> (
             
             
-                <p onClick={()=> handleRemovingType(item)} key={index}>type{index}: {item}</p>
+                <p 
+                className={score.length ===0 ? "normal-display" : determineScoreTruth(index)}
+                 onClick={()=>  handleRemovingType(item)} key={index}>type{index}: {item}</p>
            
             )))}
             <p>{pokemonType[0]}</p>
@@ -146,7 +168,7 @@ useEffect(()=> {
             )}
             <button onClick={handleSubmitType}>Submit</button>
             {/* where all the types are displayed */} 
-            <chosenTypeContext.Provider value={{chosenType, setChosenType, score, setScore}}>
+            <chosenTypeContext.Provider value={{chosenType, setChosenType, score}}>
 
        
            <TypeSection />

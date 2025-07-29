@@ -1,27 +1,23 @@
-import { useContext, useEffect } from "react"
-import { chosenTypeContext } from "./Game"
+import { useContext } from "react"
+// import { chosenTypeContext } from "./Game"
+import { chosenTypeContext } from "./chosenTypeContext"
 
  interface typeObject {
         name:string,
         icon:string
     }
 function TypeButton ({name, icon}: typeObject) {
-    const {chosenType, setChosenType,score,setScore} = useContext(chosenTypeContext)
+    const {chosenType, setChosenType,score} = useContext(chosenTypeContext)
 
-    // useEffect(()=> {
-    //     const index = chosenType.find((element) => element === name)
-    //     if (score[index] ===true)  {
-    //         return("correct-button")
-    //     }
-    // }, [setScore])
+    
     const determineTruth = ():string => {
-        console.log("determing the truth")
+        // console.log("determing the truth")
         if (!chosenType.includes(name)) {
             return "normal-button"
             
         }
         const index = chosenType.findIndex((element) => element === name)
-        console.log(index, "this is the index and this is score in", score[index])
+        // console.log(index, "this is the index and this is score in", score[index])
              if (score[index] ===true)  
              return"correct-button"
              else {
