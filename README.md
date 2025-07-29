@@ -1,9 +1,9 @@
 # Guess-The-Pokemon-Type
 
-1. fetch the pokemon
-2. deterime its type each time
-3. design the brief ui
-   type matchup
+1. fetch the pokemon  YES
+2. deterime its type each time YES
+3. design the brief ui 
+   type matchup YES
 4. click and register type
    5.display the registered type
 5. check if its correct
