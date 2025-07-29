@@ -13,11 +13,7 @@ function TypeSection() {
         createTypeObject()
 
     },[])
-    useEffect(()=> {
-        console.log(typeState)
-
-    },[typeState])
-
+   
     async function getType(id:number):Promise<typeObject> {
         try {
             const response = await fetch(`https://pokeapi.co/api/v2/type/${id}/`)
@@ -26,7 +22,7 @@ function TypeSection() {
             }
             else {
                 const typeData = await response.json()
-                console.log(typeData)
+                // console.log(typeData)
                 // console.log(typeData.sprites["generation-viii"]["brilliant-diamond-and-shining-pearl"])
 
                 return {

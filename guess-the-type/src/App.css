@@ -1,1 +1,10 @@
 @import "tailwindcss";
+
+@layer components {
+    .correct-button {
+        @apply brightness-[90]
+    }
+    .incorrect-button {
+        @apply brightness-[0.2]
+    }
+}
