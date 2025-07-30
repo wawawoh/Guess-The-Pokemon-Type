@@ -191,7 +191,7 @@ setPokemonType(types);
             )))}
             </div>
             <div className="flex gap-10 text-[1.2rem]">
-<button className="px-3 rounded-3xl bg-gray-900" onClick={()=> setReset((prev)=>!prev )}>reset</button>
+<button className="px-3 rounded-3xl bg-gray-900" onClick={()=> setReset((prev)=>!prev )}>New</button>
             <button className="px-3 rounded-3xl bg-gray-900" onClick={handleSubmitType}>Submit</button>
             </div>
             
