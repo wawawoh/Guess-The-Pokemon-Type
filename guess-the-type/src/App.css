@@ -2,15 +2,23 @@
 
 @layer components {
     .correct-button {
-        @apply brightness-[90]
+        @apply bg-green-400 rounded-2xl
     }
     .incorrect-button {
-        @apply brightness-[0.2]
+        @apply bg-red-400 rounded-2xl
     }
     .correct-display {
-        @apply text-green-600
+        @apply text-green-600 bg-gray-600 p-2 rounded-2xl
     }
     .incorrect-display {
-        @apply text-red-600
+        @apply text-red-600 bg-gray-600 p-2 rounded-2xl
+    }
+    .normal-display {
+        @apply bg-gray-600 p-2
+        
+    }
+    .regular-button {
+        @apply bg-gray-300 rounded-2xl
+        
     }
 }

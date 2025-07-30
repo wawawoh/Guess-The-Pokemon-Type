@@ -65,7 +65,7 @@ function TypeSection() {
     }
     return (
         // this is the type board
-        <section >
+        <section className="grid grid-rows-3 grid-cols-6 gap-3 max-lg:grid-cols-2">
             {typeState && (
                 createBoardButtons()
 

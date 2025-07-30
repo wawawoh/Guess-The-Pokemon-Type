@@ -2,6 +2,7 @@ import React, {  useEffect, useState } from "react"
 import { chosenTypeContext } from "./chosenTypeContext"
 
 import TypeSection from "./TypeSection"
+import DisplayItem from "./DisplayItem"
 
 
 function Game() {
@@ -11,6 +12,7 @@ function Game() {
     const [chosenType, setChosenType] = useState <string[]>([])
     const [displayType, setDisplaytype] = useState<string[]>([""])
     const [score, setScore] = useState<boolean[]>([])
+    const [reset, setReset] = useState(false)
     
     
      
@@ -112,11 +114,24 @@ setPokemonType(types);
         
     }
     useEffect(()=> {
+        setPokemonType([])
+        setScore([])
+        setDisplaytype([])
+        setChosenType([])
         getPokemon(Math.floor((Math.random()* 1024) +1))
+        
 
-    },[])
+    },[reset])
+    //   const determineScoreTruth = (index:number) => {
+    //     if (score[index] ) 
+    //         {return "correct-display"
 
-    // this one is causing problems
+    //         } else {
+    //             return "incorrect-display"
+    //         }
+    // } 
+
+    
     
     const handleRemovingType = (item:string,) => {
         setChosenType((prev) => prev.map((currentItem, )=> currentItem == item ? "" : currentItem))
@@ -134,39 +149,52 @@ setPokemonType(types);
         changingDisplay()
 
     }
-    const determineScoreTruth = (index:number) => {
-        if (score[index] ) 
-            {return "correct-display"
+   
+    const determineChat = (item:string,index:number) =>  {
+        
+        if ( pokemonType.length ==2) {
+            if (index === 0 ) {
+                  return <span>The {<DisplayItem item={item}  handleRemovingType={handleRemovingType} score = {score} index={index}/>}  </span>
 
-            } else {
-                return "incorrect-display"
             }
-    } 
+            if (index === 1 ) {
+                return <span>and {<DisplayItem item={item}  handleRemovingType={handleRemovingType} score = {score} index={index}/> }  type</span>
+            }
+        } else {
+            return <span>the {<DisplayItem item={item}  handleRemovingType={handleRemovingType} score = {score} index={index}/>}  type </span>
+        }
+        
+        
+    }
+
    
     
     return (
-        <div>
+        <div className="flex w-[100vw] h-[100vh] flex-col justify-center items-center px-10 text-2xl gap-4 max-lg:text-[1.5rem]">
             {image && (
-                <img src={image} alt="" />
+                <img className="w-50" src={image} alt="" />
 
             )}
             
             
-            <h2>{name}</h2>
-
+            <h2 className="capitalize">{name}</h2>
+            <div className="flex self-stretch justify-center gap-1 ">
            {displayType &&  (displayType.map ((item:string,index:number)=> (
             
-            
-                <p 
-                className={score.length ===0 ? "normal-display" : determineScoreTruth(index)}
-                 onClick={()=>  handleRemovingType(item)} key={index}>type{index}: {item}</p>
+                
+<p className="flex flex-wrap max-lg:text-[1.1rem]"
+                
+                 key={index}>{determineChat(item,index)}</p>
+                
+                
            
             )))}
-            <p>{pokemonType[0]}</p>
-            {pokemonType[1] && (
-                <p>{pokemonType[1]}</p>
-            )}
-            <button onClick={handleSubmitType}>Submit</button>
+            </div>
+            <div className="flex gap-10 text-[1.2rem]">
+<button className="px-3 rounded-3xl bg-gray-900" onClick={()=> setReset((prev)=>!prev )}>reset</button>
+            <button className="px-3 rounded-3xl bg-gray-900" onClick={handleSubmitType}>Submit</button>
+            </div>
+            
             {/* where all the types are displayed */} 
             <chosenTypeContext.Provider value={{chosenType, setChosenType, score}}>
 
