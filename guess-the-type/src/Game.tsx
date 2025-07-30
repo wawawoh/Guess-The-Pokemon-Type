@@ -170,7 +170,7 @@ setPokemonType(types);
    
     
     return (
-        <div className="flex w-[100vw] h-[100vh] flex-col justify-center items-center px-10 text-2xl gap-4 max-lg:text-[1.5rem]">
+        <div className="flex w-[100vw] h-[100vh] flex-col justify-center items-center px-10 py-3 text-2xl gap-4 max-lg:text-[1.5rem]">
             {image && (
                 <img className="w-50" src={image} alt="" />
 
