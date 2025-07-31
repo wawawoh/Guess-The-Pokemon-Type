@@ -114,7 +114,7 @@ setPokemonType(types);
         
     }
     useEffect(()=> {
-        setPokemonType([])
+        setPokemonType([""])
         setScore([])
         setDisplaytype([])
         setChosenType([])
