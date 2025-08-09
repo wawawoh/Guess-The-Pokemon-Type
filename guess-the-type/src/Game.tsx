@@ -65,10 +65,24 @@ useEffect(()=> {
         const newArray = [...displayType]
         newArray.forEach((el,index) => {
             if (!pokemonType.includes(el)) {
+                console.log("these are the chosen types", chosenType)
               if (index === 0) {
-                newArray[0] =( pokemonType.find((el) => el !== displayType[1] )! )
+                if (chosenType[1] !== "") {
+                      newArray[0] =( pokemonType.find((el) => el !== displayType[1] )! )
+
+                } else {
+                     newArray[0] =pokemonType[0]
+                }
+              
               } else {
-                newArray[1] =( pokemonType.find((el) => el !== displayType[0])! )
+                if (chosenType[0] !== "") {
+                    newArray[1] =( pokemonType.find((el) => el !== displayType[0])! )
+
+                } else {
+                    console.log("number 2 is empty ")
+                    newArray[1] =pokemonType[1]
+                }
+                
 
               }
 
