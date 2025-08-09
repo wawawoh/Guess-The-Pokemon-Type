@@ -61,39 +61,38 @@ useEffect(()=> {
             console.log("this is the display type", displayType)
        }
     }
-    const indexChanger =(displayType:string[]) => {
-        const newArray = [...displayType]
-        newArray.forEach((el,index) => {
-            if (!pokemonType.includes(el)) {
-                console.log("these are the chosen types", chosenType)
-              if (index === 0) {
-                if (chosenType[1] !== "") {
-                      newArray[0] =( pokemonType.find((el) => el !== displayType[1] )! )
+    const indexChanger = (displayType: string[]) => {
+  const newArray = [...displayType];
 
-                } else {
-                     newArray[0] =pokemonType[0]
-                }
-              
-              } else {
-                if (chosenType[0] !== "") {
-                    newArray[1] =( pokemonType.find((el) => el !== displayType[0])! )
+  newArray.forEach((item, index) => {
+    console.log("Current array:", newArray);
 
-                } else {
-                    console.log("number 2 is empty ")
-                    newArray[1] =pokemonType[1]
-                }
-                
+    if (!pokemonType.includes(item)) {
+      console.log("Chosen types:", chosenType);
 
-              }
-
-            }
-            
+      if (index === 0) {
+        if (chosenType[1] !== "") {
+          const found = pokemonType.find(type => type !== newArray[1]);
+          if (found) newArray[0] = found;
+        } else {
+          newArray[0] = pokemonType[0];
         }
-        
-    );
-    console.log("here is the new array,", newArray)
-    return newArray
+      } else {
+        if (chosenType[0] !== "") {
+          const found = pokemonType.find(type => type !== newArray[0]);
+          if (found) newArray[1] = found;
+        } else {
+          console.log("number 2 is empty");
+          newArray[1] = pokemonType[1];
+        }
+      }
     }
+  });
+
+  console.log("Final array:", newArray);
+  return newArray;
+};
+
     
 
     async function getPokemon(id: number) {
@@ -148,7 +147,11 @@ setPokemonType(types);
     
     
     const handleRemovingType = (item:string,) => {
-        setChosenType((prev) => prev.map((currentItem, )=> currentItem == item ? "" : currentItem))
+        console.log("here is the score", score)
+        if (score.length === 0) {
+             setChosenType((prev) => prev.map((currentItem, )=> currentItem == item ? "" : currentItem))
+        }
+       
     }
     const handleSubmitType = () => {
         const temp = chosenType.map((type,index)=> {
